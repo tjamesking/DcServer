@@ -20,7 +20,9 @@ sub query {
   my $socket= new IO::Socket::INET(
     PeerAddr => $self->{host} || 'localhost',
     PeerPort => $self->{port} || 8191,
-    Proto => 'tcp');
+    Proto => 'tcp',
+    Timeout => $self->{timeout} || 10,
+  );
   croak "$!. Is the server running?\n" unless $socket;
   print $socket $query . "\n.\n";
   while($buffer= <$socket>) {
